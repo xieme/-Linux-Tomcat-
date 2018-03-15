@@ -1,6 +1,6 @@
 # -Linux-Tomcat-
-修改server.xml文件解决
-近日在部署测试环境的时候遇到多个Tomcat端口占用的问题,以下为启动报错日志!需要修改以下三个端口:
+修改server.xml文件解决近日在部署测试环境的时候遇到多个Tomcat端口占用的问题,以下为启动报错日志!
+需要修改以下三个端口:
 15-Mar-2018 09:50:53.925 严重 [main] org.apache.catalina.core.StandardServer.await StandardServer.await: create[localhost:8005]: 
  java.net.BindException: 地址已在使用 (Bind failed)
 	at java.net.PlainSocketImpl.socketBind(Native Method)
@@ -16,8 +16,8 @@
 	at java.lang.reflect.Method.invoke(Method.java:498)
 	at org.apache.catalina.startup.Bootstrap.start(Bootstrap.java:355)
 	at org.apache.catalina.startup.Bootstrap.main(Bootstrap.java:495)
-
-当启动第一个Tomcat的时候不会出现这个问题,但只要启动第二个Tomcat就会出现地址已经在使用问题.
+------------------------------------------------------------------------------------------------------------------
+当启动第一个Tomcat的时候不会出现这个问题,但只要启动第二个Tomcat就会出现地址已经在使用问题。
 1.修改8080端口
 将8080改成18080 x8080都可以,两个端口必须都要进行修改,不然也会出现这个问题!
     <Connector port="8080" protocol="HTTP/1.1"
@@ -38,7 +38,8 @@
          Either JSSE or OpenSSL style configuration may be used regardless of
          the SSLImplementation selected. JSSE style configuration is used below.
     -->
-    <!--
+    
+-----------------------------------------------------------------------------------------------------------------------------
 2.修改8005端口
 这个时候已经明确知道是这个8005端口占用的问题,所以找到Tomcat部署目录conf下的server.xml文件进行端口修改
 此时将下面这个8005端口改成18005或28005 X8005即可解决问题
@@ -52,7 +53,8 @@
   <!-- Prevent memory leaks due to use of particular java/javax APIs-->
   <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
   <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
-  <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
+  <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" 
+--------------------------------------------------------------------------------------------------------------------------------	    
 3.修改8009端口
 此时将下面这个8009端口改成18009或28009 X8009即可解决问题
 15-Mar-2018 10:31:02.740 严重 [main] org.apache.catalina.core.StandardService.initInternal Failed to initialize connector [Connector[AJP/1.3-8009]]
