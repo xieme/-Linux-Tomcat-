@@ -1,0 +1,26 @@
+# Linux-Nginx-
+2018/02/23服务器宕机原因!
+由于公司购买的阿里的Ubuntu服务器到期导致公司网站无法访问,现续费之后无法正常访问,最后启动Nginx的时候发现是apache端口占用的原因!
+由于线上的配置文件之前都是配置好的,所以正常启动基本就没问题了。
+操作步骤：
+一、启动mysql
+使用命令 service mysqld start
+
+二、启动各个tomcat
+进入各个tomcat安装目录中的bin目录./start.sh
+
+三、启动nginx
+进入nginx的安装目录的sbin目录中使用命令 ./nginx -c /usr/local/nginx/config/nginx.config
+这个时候出现
+nginx:[emerg] Listen() to 0.0.0.0:80, baklog 511 falid (98: Address already in use)
+nginx:[emerg] still could not bind()
+类似的错误就代表是nginx的这个80端口被占用，最后发现是apache服务器占用了这个默认的80端口
+
+四、停止apache服务80端口就不会占用了！
+使用以下命令停止apache服务
+.Stop Apache 2 Server /停止apache服务
+
+# /etc/init.d/apache2 stop
+or
+$ sudo /etc/init.d/apache2 stop
+最后再启动nginx就可以了！
